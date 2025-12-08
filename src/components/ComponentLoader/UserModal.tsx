@@ -1,4 +1,6 @@
 import "./UserModal.css";
+import { useContext } from "react";
+import { AppContext } from "../../context/context";
 
 interface UserModalProps {
   text: string;
@@ -13,6 +15,8 @@ export const UserModal = ({
   onReject,
   onClose,
 }: UserModalProps) => {
+  const { url } = useContext(AppContext);
+
   return (
     <div className="user-modal-overlay">
       <div className="user-modal-content" onClick={(e) => e.stopPropagation()}>
@@ -24,6 +28,7 @@ export const UserModal = ({
           ×
         </button>
         <div className="user-modal-body">
+          <p>URL: {url}</p>
           <p>{text}</p>
         </div>
         <div className="user-modal-actions">
