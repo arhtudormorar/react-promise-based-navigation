@@ -6,17 +6,21 @@ import {
   setTriggerUpdate,
 } from "./helpers/setComponentLoader.ts";
 
-export const ModalLoader = () => {
+interface ComponentLoaderProps {
+  id?: string;
+}
+
+export const ComponentLoader = ({ id = "default" }: ComponentLoaderProps) => {
   const [, forceUpdate] = useState(0);
 
   useEffect(() => {
-    setTriggerUpdate(() => forceUpdate((v) => v + 1));
+    setTriggerUpdate(id, () => forceUpdate((v) => v + 1));
     return () => {
-      setTriggerUpdate(null);
+      setTriggerUpdate(id, null);
     };
-  }, []);
+  }, [id]);
 
-  const customComponent = getCustomComponent();
+  const customComponent = getCustomComponent(id);
   if (customComponent) {
     const target = findDOMTarget();
     return createPortal(customComponent, target);

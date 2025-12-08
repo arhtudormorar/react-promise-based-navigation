@@ -1,9 +1,9 @@
-import { ModalLoader } from "./ComponentLoader/ModalLoader";
+import { ComponentLoader } from "./ComponentLoader/ComponentLoader";
 
 export const Utils = () => {
   return (
     <>
-      <ModalLoader />
+      <ComponentLoader />
     </>
   );
 };

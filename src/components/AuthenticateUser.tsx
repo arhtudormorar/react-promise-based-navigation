@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AppContext } from "../context/context";
-import { getUserApproval } from "./ComponentLoader/getUserApproval";
+import { getUserApproval } from "./UserModal/getUserApproval";
 
 export const AuthenticateUser = () => {
   const { url } = useContext(AppContext);

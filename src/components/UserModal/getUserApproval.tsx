@@ -1,4 +1,4 @@
-import { setComponentLoader } from "./helpers/setComponentLoader";
+import { setComponentLoader } from "../ComponentLoader/helpers/setComponentLoader";
 import { UserModal } from "./UserModal";
 
 export async function getUserApproval(text: string): Promise<boolean> {
