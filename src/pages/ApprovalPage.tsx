@@ -1,24 +1,20 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../context/context";
 import {
   resolveNavigation,
   rejectNavigation,
 } from "../utils/navigationPromiseManager";
+import { useApprovalStore } from "../stores/approvalStore";
 import "./ApprovalPage.css";
 
 export const ApprovalPage = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const { url } = useContext(AppContext);
-  const { text, __navigationId } =
-    (location.state as {
-      text?: string;
-      __navigationId?: string;
-    }) || {};
+  const { approvalData, setApprovalData } = useApprovalStore();
 
-  // Handle case where user navigated directly (no state)
-  if (!__navigationId || !text) {
+  // Handle case where user navigated directly (no store data)
+  if (!approvalData?.navigationId || !approvalData?.text) {
     return (
       <div className="approval-page">
         <div className="approval-content">
@@ -30,18 +26,23 @@ export const ApprovalPage = () => {
     );
   }
 
+  const { text, navigationId } = approvalData;
+
   const handleApprove = () => {
-    resolveNavigation(__navigationId, true);
+    resolveNavigation(navigationId, true);
+    setApprovalData(null);
     navigate(-1);
   };
 
   const handleReject = () => {
-    resolveNavigation(__navigationId, false);
+    resolveNavigation(navigationId, false);
+    setApprovalData(null);
     navigate(-1);
   };
 
   const handleClose = () => {
-    rejectNavigation(__navigationId, new Error("User closed approval page"));
+    rejectNavigation(navigationId, new Error("User closed approval page"));
+    setApprovalData(null);
     navigate(-1);
   };
 

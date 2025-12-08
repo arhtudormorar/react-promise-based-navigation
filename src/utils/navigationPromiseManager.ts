@@ -9,12 +9,8 @@ const pendingNavigations = new Map<string, PromiseResolver<unknown>>();
  * Creates an awaitable navigation function that returns a promise
  * which resolves when the destination route calls resolveNavigation
  */
-export const createAwaitableNavigation = (
-  navigate: (to: string, options?: { state?: unknown }) => void
-) => {
-  return <T>(to: string, state?: unknown): Promise<T> => {
-    const navigationId = Math.random().toString(36).substring(2, 15);
-
+export const createAwaitableNavigation = (navigate: (to: string) => void) => {
+  return <T>(to: string, navigationId: string): Promise<T> => {
     return new Promise<T>((resolve, reject) => {
       // Store the resolver
       pendingNavigations.set(navigationId, {
@@ -22,13 +18,8 @@ export const createAwaitableNavigation = (
         reject,
       } as PromiseResolver<unknown>);
 
-      // Navigate with the ID in state
-      navigate(to, {
-        state: {
-          ...(state && typeof state === "object" ? state : {}),
-          __navigationId: navigationId,
-        },
-      });
+      // Navigate without state
+      navigate(to);
     });
   };
 };
