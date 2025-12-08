@@ -7,10 +7,14 @@ interface ApprovalData {
 
 interface ApprovalStore {
   approvalData: ApprovalData | null;
-  setApprovalData: (data: ApprovalData | null) => void;
+  setApprovalData: (text: string | null) => string;
 }
 
 export const useApprovalStore = create<ApprovalStore>((set) => ({
   approvalData: null,
-  setApprovalData: (data) => set({ approvalData: data }),
+  setApprovalData: (text: string | null) => {
+    const navigationId = Date.now().toString();
+    set({ approvalData: text ? { text, navigationId } : null });
+    return navigationId;
+  },
 }));

@@ -14,12 +14,12 @@ export const AuthenticateUser = () => {
     const response = await fetch(`${url}/todos/1`);
     const data: { title: string } = await response.json();
 
-    const navigationId = Date.now().toString();
+    // 1. Set the approval data in the store
+    const navigationId = setApprovalData(data.title);
 
-    setApprovalData({ text: data.title, navigationId });
-
+    // 2. Navigate to the approval page
     const approved = await navigatePromise<boolean>("/approval", navigationId);
-    setApprovalData(null);
+    // 3. Set the approved state
     setApproved(approved);
   };
 
