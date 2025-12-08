@@ -2,24 +2,27 @@ import { useContext, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { AppContext } from "../context/context";
 import { useAwaitableNavigation } from "../hooks/useAwaitableNavigation";
-import { useApprovalStore } from "../stores/approvalStore";
+import { ApprovalPage } from "../pages/ApprovalPage";
 
 export const AuthenticateUser = () => {
   const { url } = useContext(AppContext);
   const [approved, setApproved] = useState<boolean | null>(null);
   const navigatePromise = useAwaitableNavigation();
-  const { setApprovalData } = useApprovalStore();
 
   const authenticateUser = async () => {
     const response = await fetch(`${url}/todos/1`);
     const data: { title: string } = await response.json();
 
-    // 1. Set the approval data in the store
-    const navigationId = setApprovalData(data.title);
+    // Generate navigation ID
+    const navigationId = Date.now().toString();
 
-    // 2. Navigate to the approval page
-    const approved = await navigatePromise<boolean>("/approval", navigationId);
-    // 3. Set the approved state
+    // Register the component with props and navigate
+    const approved = await navigatePromise<boolean>(
+      `/approval?navigationId=${navigationId}`,
+      navigationId,
+      <ApprovalPage text={data.title} navigationId={navigationId} />
+    );
+
     setApproved(approved);
   };
 

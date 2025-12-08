@@ -5,44 +5,29 @@ import {
   resolveNavigation,
   rejectNavigation,
 } from "../utils/navigationPromiseManager";
-import { useApprovalStore } from "../stores/approvalStore";
 import "./ApprovalPage.css";
 
-export const ApprovalPage = () => {
+interface ApprovalPageProps {
+  text: string;
+  navigationId: string;
+}
+
+export const ApprovalPage = ({ text, navigationId }: ApprovalPageProps) => {
   const navigate = useNavigate();
   const { url } = useContext(AppContext);
-  const { approvalData, setApprovalData } = useApprovalStore();
-
-  // Handle case where user navigated directly (no store data)
-  if (!approvalData?.navigationId || !approvalData?.text) {
-    return (
-      <div className="approval-page">
-        <div className="approval-content">
-          <h2>Invalid Navigation</h2>
-          <p>This page requires navigation state. Please go back.</p>
-          <button onClick={() => navigate("/")}>Go Home</button>
-        </div>
-      </div>
-    );
-  }
-
-  const { text, navigationId } = approvalData;
 
   const handleApprove = () => {
     resolveNavigation(navigationId, true);
-    setApprovalData(null);
     navigate("..");
   };
 
   const handleReject = () => {
     resolveNavigation(navigationId, false);
-    setApprovalData(null);
     navigate("..");
   };
 
   const handleClose = () => {
     rejectNavigation(navigationId, new Error("User closed approval page"));
-    setApprovalData(null);
     navigate("..");
   };
 
