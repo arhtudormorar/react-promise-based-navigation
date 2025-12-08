@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { Outlet } from "react-router-dom";
 import { AppContext } from "../context/context";
 import { useAwaitableNavigation } from "../hooks/useAwaitableNavigation";
 import { useApprovalStore } from "../stores/approvalStore";
@@ -26,28 +27,24 @@ export const AuthenticateUser = () => {
     setApproved(null);
   };
 
-  console.log(approved);
-
-  switch (approved) {
-    case true:
-      return (
-        <div className="card">
+  return (
+    <div className="card">
+      {approved === true && (
+        <>
           <p>User approved</p>
           <button onClick={reset}>Reset</button>
-        </div>
-      );
-    case false:
-      return (
-        <div className="card">
+        </>
+      )}
+      {approved === false && (
+        <>
           <p>User rejected</p>
           <button onClick={reset}>Reset</button>
-        </div>
-      );
-    default:
-      return (
-        <div className="card">
-          <button onClick={authenticateUser}>Authenticate User</button>
-        </div>
-      );
-  }
+        </>
+      )}
+      {approved === null && (
+        <button onClick={authenticateUser}>Authenticate User</button>
+      )}
+      <Outlet />
+    </div>
+  );
 };

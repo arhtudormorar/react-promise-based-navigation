@@ -31,19 +31,19 @@ export const ApprovalPage = () => {
   const handleApprove = () => {
     resolveNavigation(navigationId, true);
     setApprovalData(null);
-    navigate(-1);
+    navigate("..");
   };
 
   const handleReject = () => {
     resolveNavigation(navigationId, false);
     setApprovalData(null);
-    navigate(-1);
+    navigate("..");
   };
 
   const handleClose = () => {
     rejectNavigation(navigationId, new Error("User closed approval page"));
     setApprovalData(null);
-    navigate(-1);
+    navigate("..");
   };
 
   return (
