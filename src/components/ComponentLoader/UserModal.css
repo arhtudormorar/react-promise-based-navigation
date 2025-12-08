@@ -1,0 +1,105 @@
+.user-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.user-modal-content {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  position: relative;
+}
+
+.user-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  line-height: 1;
+  color: #666;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: color 0.2s, background-color 0.2s;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-modal-close:hover {
+  color: #333;
+  background-color: #f3f4f6;
+}
+
+.user-modal-close:active {
+  background-color: #e5e7eb;
+}
+
+.user-modal-body {
+  margin-bottom: 24px;
+}
+
+.user-modal-body p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.user-modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.user-modal-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.user-modal-button:hover {
+  transform: translateY(-1px);
+}
+
+.user-modal-button:active {
+  transform: translateY(0);
+}
+
+.user-modal-button-approve {
+  background-color: #4f46e5;
+  color: white;
+}
+
+.user-modal-button-approve:hover {
+  background-color: #4338ca;
+}
+
+.user-modal-button-reject {
+  background-color: #ef4444;
+  color: white;
+}
+
+.user-modal-button-reject:hover {
+  background-color: #dc2626;
+}
+

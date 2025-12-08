@@ -6,7 +6,9 @@ import { AppContext } from "./context/context.ts";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AppContext.Provider value={{ networkId: "D" }}>
+    <AppContext.Provider
+      value={{ url: "https://jsonplaceholder.typicode.com" }}
+    >
       <App />
     </AppContext.Provider>
   </StrictMode>

@@ -1,9 +1,9 @@
 import { createContext } from "react";
 
 export type AppContextValue = {
-  networkId: string;
+  url: string;
 };
 
 export const AppContext = createContext<AppContextValue>({
-  networkId: "D",
+  url: "https://jsonplaceholder.typicode.com",
 });
