@@ -1,11 +1,10 @@
-import { useLocation } from "react-router-dom";
-import { getRouteComponent } from "../utils/navigationPromiseManager";
+import {
+  getCurrentNavigationId,
+  getRouteComponent,
+} from "../utils/navigationPromiseManager";
 
 export const DynamicRoute = () => {
-  const location = useLocation();
-  // Extract navigationId from query params
-  const searchParams = new URLSearchParams(location.search);
-  const navigationId = searchParams.get("navigationId");
+  const navigationId = getCurrentNavigationId();
 
   if (!navigationId) {
     return (

@@ -4,17 +4,29 @@ import { AppContext } from "../context/context";
 import {
   resolveNavigation,
   rejectNavigation,
+  getCurrentNavigationId,
 } from "../utils/navigationPromiseManager";
 import "./ApprovalPage.css";
 
 interface ApprovalPageProps {
   text: string;
-  navigationId: string;
 }
 
-export const ApprovalPage = ({ text, navigationId }: ApprovalPageProps) => {
+export const ApprovalPage = ({ text }: ApprovalPageProps) => {
   const navigate = useNavigate();
   const { url } = useContext(AppContext);
+  const navigationId = getCurrentNavigationId();
+
+  if (!navigationId) {
+    return (
+      <div className="approval-page">
+        <div className="approval-content">
+          <h2>Invalid Navigation</h2>
+          <p>Navigation ID not found. Please go back.</p>
+        </div>
+      </div>
+    );
+  }
 
   const handleApprove = () => {
     resolveNavigation(navigationId, true);
