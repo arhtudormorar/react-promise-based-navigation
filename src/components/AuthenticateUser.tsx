@@ -8,6 +8,7 @@ export const AuthenticateUser = () => {
   const authenticateUser = async () => {
     const response = await fetch(`${url}/todos/1`);
     const data: { title: string } = await response.json();
+    console.log(data.title);
     const approved = await getUserApproval(data.title);
     console.log(approved);
   };
