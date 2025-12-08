@@ -7,37 +7,29 @@ type PromiseResolver<T> = {
 
 const pendingNavigations = new Map<string, PromiseResolver<unknown>>();
 const routeComponents = new Map<string, ReactNode>();
-let currentNavigationId: string | null = null;
 
 /**
  * Register a component to be rendered at a route
  */
 export const registerRouteComponent = (
-  navigationId: string,
+  pathname: string,
   component: ReactNode
 ) => {
-  routeComponents.set(navigationId, component);
+  routeComponents.set(pathname, component);
 };
 
 /**
  * Get the registered component for a navigation ID
  */
-export const getRouteComponent = (navigationId: string) => {
-  return routeComponents.get(navigationId) || null;
+export const getRouteComponent = (pathname: string) => {
+  return routeComponents.get(pathname) || null;
 };
 
 /**
  * Clear the registered component
  */
-export const clearRouteComponent = (navigationId: string) => {
-  routeComponents.delete(navigationId);
-};
-
-/**
- * Get the current active navigation ID
- */
-export const getCurrentNavigationId = () => {
-  return currentNavigationId;
+export const clearRouteComponent = (pathname: string) => {
+  routeComponents.delete(pathname);
 };
 
 /**
@@ -48,20 +40,16 @@ export const createAwaitableNavigation = (navigate: (to: string) => void) => {
   return <T>(to: string, component?: ReactNode): Promise<T> => {
     return new Promise<T>((resolve, reject) => {
       // Use the route path as the navigation ID
-      const navigationId = to;
 
       // Store the resolver
-      pendingNavigations.set(navigationId, {
+      pendingNavigations.set(to, {
         resolve,
         reject,
       } as PromiseResolver<unknown>);
 
-      // Set as current navigation ID
-      currentNavigationId = navigationId;
-
       // Register the component if provided
       if (component) {
-        registerRouteComponent(navigationId, component);
+        registerRouteComponent(to, component);
       }
 
       // Navigate without query params
@@ -82,9 +70,6 @@ export const resolveNavigation = <T = unknown>(
     resolver.resolve(value as unknown);
     pendingNavigations.delete(navigationId);
     clearRouteComponent(navigationId);
-    if (currentNavigationId === navigationId) {
-      currentNavigationId = null;
-    }
   }
 };
 
@@ -97,8 +82,5 @@ export const rejectNavigation = (navigationId: string, reason?: unknown) => {
     resolver.reject(reason as Error | undefined);
     pendingNavigations.delete(navigationId);
     clearRouteComponent(navigationId);
-    if (currentNavigationId === navigationId) {
-      currentNavigationId = null;
-    }
   }
 };

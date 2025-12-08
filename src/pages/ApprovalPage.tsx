@@ -1,10 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../context/context";
 import {
   resolveNavigation,
   rejectNavigation,
-  getCurrentNavigationId,
 } from "../utils/navigationPromiseManager";
 import "./ApprovalPage.css";
 
@@ -14,10 +13,10 @@ interface ApprovalPageProps {
 
 export const ApprovalPage = ({ text }: ApprovalPageProps) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { url } = useContext(AppContext);
-  const navigationId = getCurrentNavigationId();
 
-  if (!navigationId) {
+  if (!pathname) {
     return (
       <div className="approval-page">
         <div className="approval-content">
@@ -29,17 +28,17 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
   }
 
   const handleApprove = () => {
-    resolveNavigation(navigationId, true);
+    resolveNavigation(pathname, true);
     navigate("..");
   };
 
   const handleReject = () => {
-    resolveNavigation(navigationId, false);
+    resolveNavigation(pathname, false);
     navigate("..");
   };
 
   const handleClose = () => {
-    rejectNavigation(navigationId, new Error("User closed approval page"));
+    rejectNavigation(pathname, new Error("User closed approval page"));
     navigate("..");
   };
 

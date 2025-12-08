@@ -1,23 +1,9 @@
-import {
-  getCurrentNavigationId,
-  getRouteComponent,
-} from "../utils/navigationPromiseManager";
+import { useLocation } from "react-router-dom";
+import { getRouteComponent } from "../utils/navigationPromiseManager";
 
 export const DynamicRoute = () => {
-  const navigationId = getCurrentNavigationId();
-
-  if (!navigationId) {
-    return (
-      <div className="approval-page">
-        <div className="approval-content">
-          <h2>Invalid Navigation</h2>
-          <p>This page requires navigation state. Please go back.</p>
-        </div>
-      </div>
-    );
-  }
-
-  const component = getRouteComponent(navigationId);
+  const { pathname } = useLocation();
+  const component = getRouteComponent(pathname);
 
   if (!component) {
     return (
