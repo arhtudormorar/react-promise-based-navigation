@@ -13,13 +13,9 @@ export const AuthenticateUser = () => {
     const response = await fetch(`${url}/todos/1`);
     const data: { title: string } = await response.json();
 
-    // Generate navigation ID
-    const navigationId = Date.now().toString();
-
     // Register the component with props and navigate
     const approved = await navigatePromise<boolean>(
       "/approval",
-      navigationId,
       <ApprovalPage text={data.title} />
     );
 

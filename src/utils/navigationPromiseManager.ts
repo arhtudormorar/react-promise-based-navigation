@@ -45,12 +45,11 @@ export const getCurrentNavigationId = () => {
  * which resolves when the destination route calls resolveNavigation
  */
 export const createAwaitableNavigation = (navigate: (to: string) => void) => {
-  return <T>(
-    to: string,
-    navigationId: string,
-    component?: ReactNode
-  ): Promise<T> => {
+  return <T>(to: string, component?: ReactNode): Promise<T> => {
     return new Promise<T>((resolve, reject) => {
+      // Use the route path as the navigation ID
+      const navigationId = to;
+
       // Store the resolver
       pendingNavigations.set(navigationId, {
         resolve,

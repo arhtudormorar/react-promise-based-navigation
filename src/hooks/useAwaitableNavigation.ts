@@ -7,10 +7,8 @@ import { createAwaitableNavigation } from "../utils/navigationPromiseManager";
  *
  * @example
  * const navigatePromise = useAwaitableNavigation();
- * const navigationId = Date.now().toString();
  * const result = await navigatePromise<boolean>(
  *   '/approval',
- *   navigationId,
  *   <ApprovalPage text="Approve?" />
  * );
  */
