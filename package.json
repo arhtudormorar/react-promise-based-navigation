@@ -1,5 +1,6 @@
 {
   "name": "react-promise-app",
+  "description": "A React application demonstrating promise-based navigation as an alternative to useEffect hooks for managing business logic flow. Navigate and await user actions with linear, type-safe async/await chains instead of scattered reactive effects.",
   "private": true,
   "version": "0.0.0",
   "type": "module",
