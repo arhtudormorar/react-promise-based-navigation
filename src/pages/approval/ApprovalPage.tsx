@@ -26,7 +26,7 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
 
   const handleClose = () => {
     rejectNavigation(pathname, new Error("User closed approval page"));
-    navigate("..");
+    navigate("..", { replace: true });
   };
 
   return (

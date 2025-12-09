@@ -34,9 +34,12 @@ export const clearRouteComponent = (pathname: string) => {
 
 /**
  * Creates an awaitable navigation function that returns a promise
- * which resolves when the destination route calls resolveNavigation
+ * which resolves when the destination route calls resolveNavigation.
+ * Navigation uses replace to avoid polluting browser history.
  */
-export const createAwaitableNavigation = (navigate: (to: string) => void) => {
+export const createAwaitableNavigation = (
+  navigate: (to: string, options?: { replace?: boolean }) => void
+) => {
   return <T>(to: string, component?: ReactNode): Promise<T> => {
     return new Promise<T>((resolve, reject) => {
       // Use the route path as the navigation ID
@@ -52,8 +55,8 @@ export const createAwaitableNavigation = (navigate: (to: string) => void) => {
         registerRouteComponent(to, component);
       }
 
-      // Navigate without query params
-      navigate(to);
+      // Navigate without adding to history so back button skips dynamic routes
+      navigate(to, { replace: true });
     });
   };
 };

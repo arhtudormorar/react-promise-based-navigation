@@ -14,7 +14,7 @@ export const Loader = ({ isApproving }: LoaderProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       resolveNavigation(pathname, isApproving);
-      navigate("..");
+      navigate("..", { replace: true });
     }, 2000);
 
     return () => clearTimeout(timer);
