@@ -14,7 +14,7 @@ export const ApprovalActions = () => {
       <Loader isApproving={true} />
     );
     resolveNavigation(pathname, isApproved);
-    navigate("..", { replace: true });
+    navigate("/", { replace: true });
   };
 
   const handleReject = async () => {
@@ -23,7 +23,7 @@ export const ApprovalActions = () => {
       <Loader isApproving={false} />
     );
     resolveNavigation(pathname, isRejected);
-    navigate("..", { replace: true });
+    navigate("/", { replace: true });
   };
 
   return (

@@ -13,20 +13,9 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
   const { pathname } = useLocation();
   const { url } = useContext(AppContext);
 
-  if (!pathname) {
-    return (
-      <div className="approval-page">
-        <div className="approval-content">
-          <h2>Invalid Navigation</h2>
-          <p>Navigation ID not found. Please go back.</p>
-        </div>
-      </div>
-    );
-  }
-
   const handleClose = () => {
     rejectNavigation(pathname, new Error("User closed approval page"));
-    navigate("..", { replace: true });
+    navigate("/", { replace: true });
   };
 
   return (
