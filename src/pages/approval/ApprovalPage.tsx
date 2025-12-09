@@ -1,9 +1,10 @@
-import { useNavigate, useLocation, Outlet, Route } from "react-router-dom";
+import { useNavigate, Outlet, Route } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../context/context";
 import { rejectNavigation } from "../../utils/navigationPromiseManager";
 import { DynamicRoute } from "../../components/DynamicRoute";
 import { ApprovalActions } from "./pages/ApprovalActions";
+import { routeNames } from "../../routes/routeNames";
 import "./ApprovalPage.css";
 
 interface ApprovalPageProps {
@@ -13,12 +14,11 @@ interface ApprovalPageProps {
 export const ApprovalPage = {
   Component: ({ text }: ApprovalPageProps) => {
     const navigate = useNavigate();
-    const { pathname } = useLocation();
     const { url } = useContext(AppContext);
 
     const handleClose = () => {
-      rejectNavigation(pathname, new Error("User closed approval page"));
-      navigate("/", { replace: true });
+      rejectNavigation(new Error("User closed approval page"));
+      navigate(routeNames.home, { replace: true });
     };
 
     return (

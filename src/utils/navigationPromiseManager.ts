@@ -19,7 +19,7 @@ export const registerRouteComponent = (
 };
 
 /**
- * Get the registered component for a navigation ID
+ * Get the registered component for a pathname
  */
 export const getRouteComponent = (pathname: string) => {
   return routeComponents.get(pathname) || null;
@@ -82,14 +82,17 @@ export const resolveNavigation = <T = unknown>(
 /**
  * Rejects a pending navigation promise
  */
-export const rejectNavigation = (navigationId: string, reason?: unknown) => {
-  const resolver = pendingNavigations.get(navigationId);
+export const rejectNavigation = (
+  reason?: unknown,
+  pathname = window.location.pathname
+) => {
+  const resolver = pendingNavigations.get(pathname);
 
   if (!resolver) {
     return;
   }
 
   resolver.reject(reason as Error | undefined);
-  pendingNavigations.delete(navigationId);
-  clearRouteComponent(navigationId);
+  pendingNavigations.delete(pathname);
+  clearRouteComponent(pathname);
 };

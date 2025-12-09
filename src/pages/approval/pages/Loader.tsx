@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { resolveNavigation } from "../../../utils/navigationPromiseManager";
 import "./Loader.css";
 
@@ -9,7 +9,6 @@ interface LoaderProps {
 
 export const Loader = ({ isApproving }: LoaderProps) => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -18,7 +17,7 @@ export const Loader = ({ isApproving }: LoaderProps) => {
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [navigate, isApproving, pathname]);
+  }, [navigate, isApproving]);
 
   return (
     <div className="loader-container">
