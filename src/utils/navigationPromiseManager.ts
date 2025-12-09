@@ -69,11 +69,14 @@ export const resolveNavigation = <T = unknown>(
   value: T
 ) => {
   const resolver = pendingNavigations.get(navigationId);
-  if (resolver) {
-    resolver.resolve(value as unknown);
-    pendingNavigations.delete(navigationId);
-    clearRouteComponent(navigationId);
+
+  if (!resolver) {
+    return;
   }
+
+  resolver.resolve(value as unknown);
+  pendingNavigations.delete(navigationId);
+  clearRouteComponent(navigationId);
 };
 
 /**
@@ -81,9 +84,12 @@ export const resolveNavigation = <T = unknown>(
  */
 export const rejectNavigation = (navigationId: string, reason?: unknown) => {
   const resolver = pendingNavigations.get(navigationId);
-  if (resolver) {
-    resolver.reject(reason as Error | undefined);
-    pendingNavigations.delete(navigationId);
-    clearRouteComponent(navigationId);
+
+  if (!resolver) {
+    return;
   }
+
+  resolver.reject(reason as Error | undefined);
+  pendingNavigations.delete(navigationId);
+  clearRouteComponent(navigationId);
 };
