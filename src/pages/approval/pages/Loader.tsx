@@ -4,21 +4,21 @@ import { resolveNavigation } from "../../../utils/navigationPromiseManager";
 import "./Loader.css";
 
 interface LoaderProps {
-  action?: "approve" | "reject";
+  isApproving: boolean;
 }
 
-export const Loader = ({ action = "approve" }: LoaderProps) => {
+export const Loader = ({ isApproving }: LoaderProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      resolveNavigation(pathname, true);
+      resolveNavigation(pathname, isApproving);
       navigate("..");
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [navigate, pathname]);
+  }, [navigate, isApproving, pathname]);
 
   return (
     <div className="loader-container">
@@ -28,7 +28,7 @@ export const Loader = ({ action = "approve" }: LoaderProps) => {
         <div className="loader-spinner-ring"></div>
       </div>
       <p className="loader-text">
-        {action === "approve" ? "Approving..." : "Rejecting..."}
+        {isApproving ? "Approving..." : "Rejecting..."}
       </p>
     </div>
   );

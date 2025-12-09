@@ -8,22 +8,21 @@ export const ApprovalActions = () => {
   const { pathname } = useLocation();
   const navigatePromise = useAwaitableNavigation();
 
-  // Get the base path (remove /loader if present)
-  const basePath = pathname.replace(/\/loader$/, "");
-
   const handleApprove = async () => {
-    const loaderPath = `${basePath}/loader`;
-    await navigatePromise(loaderPath, <Loader action="approve" />);
-    // After loader resolves, resolve the parent approval navigation
-    resolveNavigation(basePath, true);
+    const isApproved = await navigatePromise(
+      "/approval/loader",
+      <Loader isApproving={true} />
+    );
+    resolveNavigation(pathname, isApproved);
     navigate("..");
   };
 
   const handleReject = async () => {
-    const loaderPath = `${basePath}/loader`;
-    await navigatePromise(loaderPath, <Loader action="reject" />);
-    // After loader resolves, resolve the parent approval navigation
-    resolveNavigation(basePath, false);
+    const isRejected = await navigatePromise(
+      "/approval/loader",
+      <Loader isApproving={false} />
+    );
+    resolveNavigation(pathname, isRejected);
     navigate("..");
   };
 
