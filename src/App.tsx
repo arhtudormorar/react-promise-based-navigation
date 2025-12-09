@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import { Layout } from "./components/Layout";
-import { AuthenticateUser } from "./components/AuthenticateUser";
+import { AuthenticateUser } from "./pages/authenticate/AuthenticateUser";
 import { DynamicRoute } from "./components/DynamicRoute";
 import { ApprovalActions } from "./pages/approval/pages/ApprovalActions";
 

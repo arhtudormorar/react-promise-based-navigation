@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { AppContext } from "../context/context";
-import { useAwaitableNavigation } from "../hooks/useAwaitableNavigation";
-import { ApprovalPage } from "../pages/approval/ApprovalPage";
+import { AppContext } from "../../context/context";
+import { useAwaitableNavigation } from "../../hooks/useAwaitableNavigation";
+import { ApprovalPage } from "../approval/ApprovalPage";
 
 export const AuthenticateUser = () => {
   const { url } = useContext(AppContext);
