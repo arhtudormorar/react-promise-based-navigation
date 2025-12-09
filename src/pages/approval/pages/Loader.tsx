@@ -1,25 +1,24 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { resolveNavigation } from "../../../utils/navigationPromiseManager";
 import "./Loader.css";
 
 interface LoaderProps {
-  action: "approve" | "reject";
-  parentPath: string;
+  action?: "approve" | "reject";
 }
 
-export const Loader = ({ action, parentPath }: LoaderProps) => {
+export const Loader = ({ action = "approve" }: LoaderProps) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // Always resolve with true after 2 seconds
-      resolveNavigation(parentPath, true);
+      resolveNavigation(pathname, true);
       navigate("..");
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [navigate, parentPath]);
+  }, [navigate, pathname]);
 
   return (
     <div className="loader-container">

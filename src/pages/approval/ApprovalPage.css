@@ -71,6 +71,10 @@
   justify-content: flex-end;
 }
 
+.approval-actions-loading {
+  justify-content: center;
+}
+
 .approval-button {
   padding: 12px 24px;
   border: none;

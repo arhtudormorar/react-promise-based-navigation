@@ -3,8 +3,9 @@ import { useContext } from "react";
 import { AppContext } from "../../context/context";
 import {
   rejectNavigation,
-  registerRouteComponent,
+  resolveNavigation,
 } from "../../utils/navigationPromiseManager";
+import { useAwaitableNavigation } from "../../hooks/useAwaitableNavigation";
 import { Loader } from "./pages/Loader";
 import "./ApprovalPage.css";
 
@@ -16,6 +17,8 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { url } = useContext(AppContext);
+  const navigatePromise = useAwaitableNavigation();
+  const isOnSubRoute = pathname.endsWith("/loader");
 
   if (!pathname) {
     return (
@@ -28,22 +31,18 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
     );
   }
 
-  const handleApprove = () => {
+  const handleApprove = async () => {
     const loaderPath = `${pathname}/loader`;
-    registerRouteComponent(
-      loaderPath,
-      <Loader action="approve" parentPath={pathname} />
-    );
-    navigate("loader");
+    await navigatePromise(loaderPath, <Loader action="approve" />);
+    resolveNavigation(pathname, true);
+    navigate("..");
   };
 
-  const handleReject = () => {
+  const handleReject = async () => {
     const loaderPath = `${pathname}/loader`;
-    registerRouteComponent(
-      loaderPath,
-      <Loader action="reject" parentPath={pathname} />
-    );
-    navigate("loader");
+    await navigatePromise(loaderPath, <Loader action="reject" />);
+    resolveNavigation(pathname, false);
+    navigate("..");
   };
 
   const handleClose = () => {
@@ -58,6 +57,7 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
           className="approval-close"
           onClick={handleClose}
           aria-label="Close"
+          disabled={isOnSubRoute}
         >
           ×
         </button>
@@ -65,21 +65,30 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
           <p>URL: {url}</p>
           <p>{text}</p>
         </div>
-        <div className="approval-actions">
-          <button
-            className="approval-button approval-button-reject"
-            onClick={handleReject}
-          >
-            Reject
-          </button>
-          <button
-            className="approval-button approval-button-approve"
-            onClick={handleApprove}
-          >
-            Approve
-          </button>
+        <div
+          className={`approval-actions ${
+            isOnSubRoute ? "approval-actions-loading" : ""
+          }`}
+        >
+          {isOnSubRoute ? (
+            <Outlet />
+          ) : (
+            <>
+              <button
+                className="approval-button approval-button-reject"
+                onClick={handleReject}
+              >
+                Reject
+              </button>
+              <button
+                className="approval-button approval-button-approve"
+                onClick={handleApprove}
+              >
+                Approve
+              </button>
+            </>
+          )}
         </div>
-        <Outlet />
       </div>
     </div>
   );
