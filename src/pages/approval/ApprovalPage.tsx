@@ -12,7 +12,6 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { url } = useContext(AppContext);
-  const isOnSubRoute = pathname.endsWith("/loader");
 
   if (!pathname) {
     return (
@@ -37,7 +36,6 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
           className="approval-close"
           onClick={handleClose}
           aria-label="Close"
-          disabled={isOnSubRoute}
         >
           ×
         </button>
@@ -45,11 +43,7 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
           <p>URL: {url}</p>
           <p>{text}</p>
         </div>
-        <div
-          className={`approval-actions ${
-            isOnSubRoute ? "approval-actions-loading" : ""
-          }`}
-        >
+        <div className="approval-actions">
           <Outlet />
         </div>
       </div>
