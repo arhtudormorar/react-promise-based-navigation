@@ -1,12 +1,7 @@
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../context/context";
-import {
-  rejectNavigation,
-  resolveNavigation,
-} from "../../utils/navigationPromiseManager";
-import { useAwaitableNavigation } from "../../hooks/useAwaitableNavigation";
-import { Loader } from "./pages/Loader";
+import { rejectNavigation } from "../../utils/navigationPromiseManager";
 import "./ApprovalPage.css";
 
 interface ApprovalPageProps {
@@ -17,7 +12,6 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { url } = useContext(AppContext);
-  const navigatePromise = useAwaitableNavigation();
   const isOnSubRoute = pathname.endsWith("/loader");
 
   if (!pathname) {
@@ -30,20 +24,6 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
       </div>
     );
   }
-
-  const handleApprove = async () => {
-    const loaderPath = `${pathname}/loader`;
-    await navigatePromise(loaderPath, <Loader action="approve" />);
-    resolveNavigation(pathname, true);
-    navigate("..");
-  };
-
-  const handleReject = async () => {
-    const loaderPath = `${pathname}/loader`;
-    await navigatePromise(loaderPath, <Loader action="reject" />);
-    resolveNavigation(pathname, false);
-    navigate("..");
-  };
 
   const handleClose = () => {
     rejectNavigation(pathname, new Error("User closed approval page"));
@@ -70,24 +50,7 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
             isOnSubRoute ? "approval-actions-loading" : ""
           }`}
         >
-          {isOnSubRoute ? (
-            <Outlet />
-          ) : (
-            <>
-              <button
-                className="approval-button approval-button-reject"
-                onClick={handleReject}
-              >
-                Reject
-              </button>
-              <button
-                className="approval-button approval-button-approve"
-                onClick={handleApprove}
-              >
-                Approve
-              </button>
-            </>
-          )}
+          <Outlet />
         </div>
       </div>
     </div>

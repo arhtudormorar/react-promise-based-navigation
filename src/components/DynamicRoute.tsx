@@ -1,9 +1,14 @@
 import { useLocation } from "react-router-dom";
 import { getRouteComponent } from "../utils/navigationPromiseManager";
 
-export const DynamicRoute = () => {
+interface DynamicRouteProps {
+  lookupPath?: string;
+}
+
+export const DynamicRoute = ({ lookupPath }: DynamicRouteProps) => {
   const { pathname } = useLocation();
-  const component = getRouteComponent(pathname);
+  const pathToLookup = lookupPath || pathname;
+  const component = getRouteComponent(pathToLookup);
 
   if (!component) {
     return (
