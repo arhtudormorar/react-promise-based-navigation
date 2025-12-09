@@ -13,7 +13,7 @@ export const Loader = ({ isApproving }: LoaderProps) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      resolveNavigation(pathname, isApproving);
+      resolveNavigation(isApproving);
       navigate("/approval", { replace: true });
     }, 2000);
 

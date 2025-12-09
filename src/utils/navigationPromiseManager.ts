@@ -65,18 +65,18 @@ export const createAwaitableNavigation = (
  * Resolves a pending navigation promise with a value
  */
 export const resolveNavigation = <T = unknown>(
-  navigationId: string,
-  value: T
+  value: T,
+  pathname = window.location.pathname
 ) => {
-  const resolver = pendingNavigations.get(navigationId);
+  const resolver = pendingNavigations.get(pathname);
 
   if (!resolver) {
     return;
   }
 
   resolver.resolve(value as unknown);
-  pendingNavigations.delete(navigationId);
-  clearRouteComponent(navigationId);
+  pendingNavigations.delete(pathname);
+  clearRouteComponent(pathname);
 };
 
 /**
