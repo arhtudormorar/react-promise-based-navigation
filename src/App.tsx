@@ -10,7 +10,9 @@ export function App() {
       <Route path="/" element={<Layout />}>
         <Route element={<AuthenticateUser />}>
           <Route index element={<></>} />
-          <Route path="approval" element={<DynamicRoute />} />
+          <Route path="approval" element={<DynamicRoute />}>
+            <Route path="loader" element={<DynamicRoute />} />
+          </Route>
         </Route>
       </Route>
     </Routes>
