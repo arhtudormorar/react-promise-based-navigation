@@ -1,10 +1,11 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../context/context";
 import {
   resolveNavigation,
   rejectNavigation,
 } from "../utils/navigationPromiseManager";
+import { Loader } from "./Loader";
 import "./ApprovalPage.css";
 
 interface ApprovalPageProps {
@@ -15,6 +16,7 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { url } = useContext(AppContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   if (!pathname) {
     return (
@@ -28,13 +30,19 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
   }
 
   const handleApprove = () => {
-    resolveNavigation(pathname, true);
-    navigate("..");
+    setIsLoading(true);
+    setTimeout(() => {
+      resolveNavigation(pathname, true);
+      navigate("..");
+    }, 2000);
   };
 
   const handleReject = () => {
-    resolveNavigation(pathname, false);
-    navigate("..");
+    setIsLoading(true);
+    setTimeout(() => {
+      resolveNavigation(pathname, false);
+      navigate("..");
+    }, 2000);
   };
 
   const handleClose = () => {
@@ -49,6 +57,7 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
           className="approval-close"
           onClick={handleClose}
           aria-label="Close"
+          disabled={isLoading}
         >
           ×
         </button>
@@ -56,19 +65,29 @@ export const ApprovalPage = ({ text }: ApprovalPageProps) => {
           <p>URL: {url}</p>
           <p>{text}</p>
         </div>
-        <div className="approval-actions">
-          <button
-            className="approval-button approval-button-reject"
-            onClick={handleReject}
-          >
-            Reject
-          </button>
-          <button
-            className="approval-button approval-button-approve"
-            onClick={handleApprove}
-          >
-            Approve
-          </button>
+        <div
+          className={`approval-actions ${
+            isLoading ? "approval-actions-loading" : ""
+          }`}
+        >
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              <button
+                className="approval-button approval-button-reject"
+                onClick={handleReject}
+              >
+                Reject
+              </button>
+              <button
+                className="approval-button approval-button-approve"
+                onClick={handleApprove}
+              >
+                Approve
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>
