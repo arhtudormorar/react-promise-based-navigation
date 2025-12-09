@@ -7,7 +7,7 @@ export function App() {
   return (
     <Routes>
       <Route path={routeNames.home} element={<Layout.Component />}>
-        {Layout.Routes}
+        {Layout.Outlet}
       </Route>
     </Routes>
   );

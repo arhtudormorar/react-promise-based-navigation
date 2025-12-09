@@ -42,7 +42,7 @@ export const ApprovalPage = {
       </div>
     );
   },
-  Routes: (
+  Outlet: (
     <>
       <Route index element={<ApprovalActions />} />
       <Route path="loader" element={<DynamicRoute />} />

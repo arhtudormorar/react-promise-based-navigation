@@ -20,10 +20,10 @@ export const Layout = {
       </>
     );
   },
-  Routes: (
+  Outlet: (
     <>
       <Route element={<AuthenticateUser.Component />}>
-        {AuthenticateUser.Routes}
+        {AuthenticateUser.Outlet}
       </Route>
     </>
   ),

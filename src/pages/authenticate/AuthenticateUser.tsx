@@ -49,11 +49,11 @@ export const AuthenticateUser = {
       </div>
     );
   },
-  Routes: (
+  Outlet: (
     <>
       <Route index element={<></>} />
       <Route path="approval" element={<DynamicRoute lookupPath="/approval" />}>
-        {ApprovalPage.Routes}
+        {ApprovalPage.Outlet}
       </Route>
     </>
   ),
