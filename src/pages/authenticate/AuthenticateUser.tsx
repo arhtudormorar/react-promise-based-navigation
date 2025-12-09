@@ -4,7 +4,6 @@ import { useAwaitableNavigation } from "../../hooks/useAwaitableNavigation";
 import { ApprovalPage } from "../approval/ApprovalPage";
 import { Outlet, Route } from "react-router-dom";
 import { DynamicRoute } from "../../components/DynamicRoute";
-import { ApprovalActions } from "../approval/pages/ApprovalActions";
 
 export const AuthenticateUser = {
   Component: () => {
@@ -19,7 +18,7 @@ export const AuthenticateUser = {
       // Register the component with props and navigate
       const approved = await navigatePromise<boolean>(
         "/approval",
-        <ApprovalPage text={data.title} />
+        <ApprovalPage.Component text={data.title} />
       );
 
       setApproved(approved);
@@ -54,8 +53,7 @@ export const AuthenticateUser = {
     <>
       <Route index element={<></>} />
       <Route path="approval" element={<DynamicRoute lookupPath="/approval" />}>
-        <Route index element={<ApprovalActions />} />
-        <Route path="loader" element={<DynamicRoute />} />
+        {ApprovalPage.Routes}
       </Route>
     </>
   ),

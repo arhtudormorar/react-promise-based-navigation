@@ -4,7 +4,7 @@ import { resolveNavigation } from "../../../utils/navigationPromiseManager";
 import "./Loader.css";
 
 interface LoaderProps {
-  isApproving: boolean;
+  isApproving?: boolean;
 }
 
 export const Loader = ({ isApproving }: LoaderProps) => {
