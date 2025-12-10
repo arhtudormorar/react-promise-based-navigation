@@ -1,10 +1,10 @@
-import { useLocation } from "wouter";
 import { resolveNavigation } from "../../../utils/navigationPromiseManager";
 import { useAwaitableNavigation } from "../../../hooks/useAwaitableNavigation";
+import { useNavigation } from "../../../context/NavigationContext";
 import { Loader } from "./Loader";
 
 export const ApprovalActions = () => {
-  const [, wNavigate] = useLocation();
+  const [, wNavigate] = useNavigation();
   const navigatePromise = useAwaitableNavigation();
 
   const handleApprove = async () => {

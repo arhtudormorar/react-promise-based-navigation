@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import { createAwaitableNavigation } from "../utils/navigationPromiseManager";
-import { useLocation } from "wouter";
+import { useNavigation } from "../context/NavigationContext";
 
 /**
  * Hook that provides an awaitable navigation function
- * Uses wouter's memory location so flows don't affect browser URL
+ * Uses flow location context so flows don't affect browser URL
  *
  * @example
  * const navigatePromise = useAwaitableNavigation();
@@ -14,7 +14,7 @@ import { useLocation } from "wouter";
  * );
  */
 export const useAwaitableNavigation = () => {
-  const [, navigate] = useLocation(); // Wouter for flow navigation
+  const [, navigate] = useNavigation();
 
   return useMemo(() => createAwaitableNavigation(navigate), [navigate]);
 };

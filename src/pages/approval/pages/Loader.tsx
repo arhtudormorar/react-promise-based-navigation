@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useLocation } from "wouter";
 import { resolveNavigation } from "../../../utils/navigationPromiseManager";
+import { useNavigation } from "../../../context/NavigationContext";
 import "./Loader.css";
 
 interface LoaderProps {
@@ -8,7 +8,7 @@ interface LoaderProps {
 }
 
 export const Loader = ({ isApproving }: LoaderProps) => {
-  const [location, wNavigate] = useLocation(); // Wouter for flow navigation
+  const [location, wNavigate] = useNavigation();
 
   useEffect(() => {
     const timer = setTimeout(() => {

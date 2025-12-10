@@ -1,5 +1,5 @@
-import { useLocation } from "wouter";
 import { getRouteComponent } from "../utils/navigationPromiseManager";
+import { useNavigation } from "../context/NavigationContext";
 
 interface OutletProps {
   /**
@@ -16,11 +16,11 @@ interface OutletProps {
 }
 
 /**
- * Component that renders the active business logic flow based on wouter memory location
+ * Component that renders the active business logic flow based on flow location context
  * Replaces the need for pre-declared routes in the main BrowserRouter
  */
 export const Outlet = ({ parentPath, children }: OutletProps = {}) => {
-  const [location] = useLocation();
+  const [location] = useNavigation();
 
   // If location is "/", no flow is active
   if (location === "/") {

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { AppContext } from "../../context/context";
 import { rejectNavigation } from "../../utils/navigationPromiseManager";
-import { useLocation as wouterLocation } from "wouter";
+import { useNavigation } from "../../context/NavigationContext";
 import { Outlet } from "../../components/Outlet";
 import { ApprovalActions } from "./pages/ApprovalActions";
 import "./ApprovalPage.css";
@@ -11,7 +11,7 @@ interface ApprovalPageProps {
 }
 
 export const ApprovalPage = ({ text }: ApprovalPageProps) => {
-  const [location, wNavigate] = wouterLocation();
+  const [location, wNavigate] = useNavigation();
   const { url } = useContext(AppContext);
 
   const handleClose = () => {
