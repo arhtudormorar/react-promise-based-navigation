@@ -4,18 +4,18 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import { App } from "./App.tsx";
 import { AppContext } from "./context/context.ts";
-import { FlowLocationProvider } from "./context/NavigationProvider.tsx";
+import { NavigationProvider } from "./context/NavigationProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <FlowLocationProvider>
+      <NavigationProvider>
         <AppContext.Provider
           value={{ url: "https://jsonplaceholder.typicode.com" }}
         >
           <App />
         </AppContext.Provider>
-      </FlowLocationProvider>
+      </NavigationProvider>
     </BrowserRouter>
   </StrictMode>
 );

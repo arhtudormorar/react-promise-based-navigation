@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
-import { LocationContext } from "./NavigationContext";
+import { NavigationContext } from "./NavigationContext";
 
-export const FlowLocationProvider = ({
+export const NavigationProvider = ({
   children,
 }: {
   children: React.ReactNode;
@@ -15,8 +15,8 @@ export const FlowLocationProvider = ({
   const value = useMemo(() => ({ location, navigate }), [location, navigate]);
 
   return (
-    <LocationContext.Provider value={value}>
+    <NavigationContext.Provider value={value}>
       {children}
-    </LocationContext.Provider>
+    </NavigationContext.Provider>
   );
 };
