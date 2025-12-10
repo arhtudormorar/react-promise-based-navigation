@@ -16,7 +16,7 @@ export const AuthenticateUser = () => {
     // Register the component with props and navigate
     const approved = await navigatePromise<boolean>(
       "/approval",
-      <ApprovalPage.Component text={data.title} />
+      <ApprovalPage text={data.title} />
     );
 
     setApproved(approved);
