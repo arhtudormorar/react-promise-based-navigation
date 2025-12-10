@@ -1,10 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 import { resolveNavigation } from "../../../utils/navigationPromiseManager";
 import { useAwaitableNavigation } from "../../../hooks/useAwaitableNavigation";
 import { Loader } from "./Loader";
 
 export const ApprovalActions = () => {
-  const navigate = useNavigate();
+  const [, wNavigate] = useLocation();
   const navigatePromise = useAwaitableNavigation();
 
   const handleApprove = async () => {
@@ -12,8 +12,8 @@ export const ApprovalActions = () => {
       "/approval/loader",
       <Loader isApproving={true} />
     );
-    resolveNavigation(isApproved);
-    navigate("/", { replace: true });
+    resolveNavigation(isApproved, "/approval");
+    wNavigate("/");
   };
 
   const handleReject = async () => {
@@ -21,8 +21,8 @@ export const ApprovalActions = () => {
       "/approval/loader",
       <Loader isApproving={false} />
     );
-    resolveNavigation(isRejected);
-    navigate("/", { replace: true });
+    resolveNavigation(isRejected, "/approval");
+    wNavigate("/");
   };
 
   return (

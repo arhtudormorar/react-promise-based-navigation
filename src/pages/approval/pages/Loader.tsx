@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 import { resolveNavigation } from "../../../utils/navigationPromiseManager";
 import "./Loader.css";
 
@@ -8,16 +8,16 @@ interface LoaderProps {
 }
 
 export const Loader = ({ isApproving }: LoaderProps) => {
-  const navigate = useNavigate();
+  const [location, wNavigate] = useLocation(); // Wouter for flow navigation
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      resolveNavigation(isApproving);
-      navigate("/approval", { replace: true });
+      resolveNavigation(isApproving, location);
+      wNavigate("/approval"); // Navigate back to approval in memory router
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [navigate, isApproving]);
+  }, [wNavigate, location, isApproving]);
 
   return (
     <div className="loader-container">

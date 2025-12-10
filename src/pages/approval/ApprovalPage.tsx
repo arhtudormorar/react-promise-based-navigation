@@ -1,10 +1,9 @@
-import { useNavigate, Outlet, Route } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../context/context";
 import { rejectNavigation } from "../../utils/navigationPromiseManager";
-import { DynamicRoute } from "../../components/DynamicRoute";
+import { useLocation as wouterLocation } from "wouter";
+import { Outlet } from "../../components/Outlet";
 import { ApprovalActions } from "./pages/ApprovalActions";
-import { routeNames } from "../../routes/routeNames";
 import "./ApprovalPage.css";
 
 interface ApprovalPageProps {
@@ -13,12 +12,12 @@ interface ApprovalPageProps {
 
 export const ApprovalPage = {
   Component: ({ text }: ApprovalPageProps) => {
-    const navigate = useNavigate();
+    const [location, wNavigate] = wouterLocation();
     const { url } = useContext(AppContext);
 
     const handleClose = () => {
-      rejectNavigation(new Error("User closed approval page"));
-      navigate(routeNames.home, { replace: true });
+      rejectNavigation(location, new Error("User closed approval page"));
+      wNavigate("/");
     };
 
     return (
@@ -36,16 +35,12 @@ export const ApprovalPage = {
             <p>{text}</p>
           </div>
           <div className="approval-actions">
-            <Outlet />
+            <Outlet parentPath="/approval">
+              <ApprovalActions />
+            </Outlet>
           </div>
         </div>
       </div>
     );
   },
-  Outlet: (
-    <>
-      <Route index element={<ApprovalActions />} />
-      <Route path="loader" element={<DynamicRoute />} />
-    </>
-  ),
 };

@@ -6,9 +6,7 @@ import { routeNames } from "./routes/routeNames";
 export function App() {
   return (
     <Routes>
-      <Route path={routeNames.home} element={<Layout.Component />}>
-        {Layout.Outlet}
-      </Route>
+      <Route path={routeNames.home} element={<Layout />} />
     </Routes>
   );
 }
