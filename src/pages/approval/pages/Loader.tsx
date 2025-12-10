@@ -8,16 +8,15 @@ interface LoaderProps {
 }
 
 export const Loader = ({ isApproving }: LoaderProps) => {
-  const [location, wNavigate] = useNavigation();
+  const [location] = useNavigation();
 
   useEffect(() => {
     const timer = setTimeout(() => {
       resolveNavigation(isApproving, location);
-      wNavigate("/approval"); // Navigate back to approval in memory router
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [wNavigate, location, isApproving]);
+  }, [location, isApproving]);
 
   return (
     <div className="loader-container">

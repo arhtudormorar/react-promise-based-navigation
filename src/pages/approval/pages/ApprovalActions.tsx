@@ -1,10 +1,8 @@
 import { resolveNavigation } from "../../../utils/navigationPromiseManager";
 import { useAwaitableNavigation } from "../../../hooks/useAwaitableNavigation";
-import { useNavigation } from "../../../context/NavigationContext";
 import { Loader } from "./Loader";
 
 export const ApprovalActions = () => {
-  const [, wNavigate] = useNavigation();
   const navigatePromise = useAwaitableNavigation();
 
   const handleApprove = async () => {
@@ -13,7 +11,6 @@ export const ApprovalActions = () => {
       <Loader isApproving={true} />
     );
     resolveNavigation(isApproved, "/approval");
-    wNavigate("/");
   };
 
   const handleReject = async () => {
@@ -22,7 +19,6 @@ export const ApprovalActions = () => {
       <Loader isApproving={false} />
     );
     resolveNavigation(isRejected, "/approval");
-    wNavigate("/");
   };
 
   return (

@@ -11,12 +11,11 @@ interface ApprovalPageProps {
 }
 
 export const ApprovalPage = ({ text }: ApprovalPageProps) => {
-  const [location, wNavigate] = useNavigation();
+  const [location] = useNavigation();
   const { url } = useContext(AppContext);
 
   const handleClose = () => {
     rejectNavigation(location, new Error("User closed approval page"));
-    wNavigate("/");
   };
 
   return (
