@@ -31,14 +31,14 @@ export const Outlet = ({ parentPath, children }: OutletProps = {}) => {
   if (parentPath) {
     // If we're not under the parent path, render children (fallback)
     if (!location.startsWith(parentPath + "/")) {
-      return <>{children}</>;
+      return children;
     }
     // Get component for the current nested path
     const component = getRouteComponent(location);
     if (!component) {
-      return <>{children}</>;
+      return children;
     }
-    return <>{component}</>;
+    return component;
   }
 
   // For root outlet, ALWAYS look for the top-level route (first segment)
@@ -59,5 +59,5 @@ export const Outlet = ({ parentPath, children }: OutletProps = {}) => {
     );
   }
 
-  return <>{component}</>;
+  return component;
 };
