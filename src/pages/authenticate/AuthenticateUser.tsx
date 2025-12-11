@@ -1,13 +1,13 @@
 import { useContext, useState } from "react";
 import { AppContext } from "../../context/context";
-import { useAwaitableNavigation } from "../../hooks/useAwaitableNavigation";
+import { useNavigationPromise } from "../../hooks/useNavigationPromise";
 import { ApprovalPage } from "../approval/ApprovalPage";
 import { Outlet } from "../../components/Outlet";
 
 export const AuthenticateUser = () => {
   const { url } = useContext(AppContext);
   const [approved, setApproved] = useState<boolean | null>(null);
-  const navigatePromise = useAwaitableNavigation();
+  const navigatePromise = useNavigationPromise();
 
   const authenticateUser = async () => {
     const response = await fetch(`${url}/todos/1`);

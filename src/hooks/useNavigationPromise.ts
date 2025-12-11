@@ -7,13 +7,13 @@ import { useNavigation } from "../context/NavigationContext";
  * Uses flow location context so flows don't affect browser URL
  *
  * @example
- * const navigatePromise = useAwaitableNavigation();
+ * const navigatePromise = useNavigationPromise();
  * const result = await navigatePromise<boolean>(
  *   '/approval',
  *   <ApprovalPage text="Approve?" />
  * );
  */
-export const useAwaitableNavigation = () => {
+export const useNavigationPromise = () => {
   const [, navigate] = useNavigation();
 
   return useMemo(() => createAwaitableNavigation(navigate), [navigate]);

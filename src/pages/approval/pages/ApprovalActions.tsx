@@ -1,9 +1,9 @@
 import { resolveNavigation } from "../../../utils/navigationPromiseManager";
-import { useAwaitableNavigation } from "../../../hooks/useAwaitableNavigation";
+import { useNavigationPromise } from "../../../hooks/useNavigationPromise";
 import { Loader } from "./Loader";
 
 export const ApprovalActions = () => {
-  const navigatePromise = useAwaitableNavigation();
+  const navigatePromise = useNavigationPromise();
 
   const handleApprove = async () => {
     const isApproved = await navigatePromise(

@@ -12,7 +12,7 @@ export const NavigationContext = createContext<NavigationContextValue | null>(
 export const useNavigation = (): [string, (to: string) => void] => {
   const context = useContext(NavigationContext);
   if (!context) {
-    throw new Error("useFlowNavigate must be used within FlowLocationProvider");
+    throw new Error("useNavigation must be used within NavigationContext");
   }
   return [context.location, context.navigate];
 };
